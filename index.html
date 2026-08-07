@@ -9,46 +9,26 @@
 
 <style>
 
-/* =========================
-   BASIC
-========================= */
-
 * {
     box-sizing: border-box;
 }
 
 html,
 body {
+    margin: 0;
     width: 100%;
     height: 100%;
-    margin: 0;
 }
 
 body {
-
     overflow: hidden;
-
     font-family: Arial, sans-serif;
-
     color: white;
 
     background:
-        radial-gradient(
-            circle at 20% 20%,
-            #ff4fa3,
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 80% 80%,
-            #6c63ff,
-            transparent 25%
-        ),
-        linear-gradient(
-            135deg,
-            #16001f,
-            #4b0b45,
-            #12002b
-        );
+        radial-gradient(circle at 15% 20%, #ff4fa3, transparent 25%),
+        radial-gradient(circle at 85% 80%, #6c63ff, transparent 25%),
+        linear-gradient(135deg, #16001f, #4b0b45, #12002b);
 }
 
 
@@ -57,12 +37,10 @@ body {
 ========================= */
 
 .screen {
-
     width: 100%;
     height: 100vh;
 
     display: flex;
-
     justify-content: center;
     align-items: center;
 }
@@ -73,7 +51,6 @@ body {
 ========================= */
 
 .card {
-
     width: 360px;
     min-height: 310px;
 
@@ -83,13 +60,11 @@ body {
 
     border-radius: 25px;
 
-    background:
-        rgba(255,255,255,0.13);
+    background: rgba(255,255,255,0.13);
 
     backdrop-filter: blur(15px);
 
-    border:
-        1px solid rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.25);
 
     box-shadow:
         0 20px 60px rgba(0,0,0,0.45);
@@ -97,26 +72,22 @@ body {
 
 
 /* =========================
-   PASSWORD PAGE
+   PASSWORD
 ========================= */
 
 h1 {
-
     margin-top: 0;
     margin-bottom: 25px;
 
     font-size: 28px;
 }
 
-
 input {
-
     width: 100%;
 
     padding: 14px;
 
     border: none;
-
     outline: none;
 
     border-radius: 12px;
@@ -128,9 +99,7 @@ input {
     margin-bottom: 7px;
 }
 
-
 .small {
-
     font-size: 12px;
 
     opacity: 0.7;
@@ -140,9 +109,7 @@ input {
     text-align: center;
 }
 
-
 button {
-
     border: none;
 
     border-radius: 12px;
@@ -154,19 +121,9 @@ button {
     font-weight: bold;
 
     cursor: pointer;
-
-    transition: transform 0.2s;
 }
-
-
-button:hover {
-
-    transform: scale(1.05);
-}
-
 
 .enter {
-
     width: 100%;
 
     background: #ff4fa3;
@@ -174,9 +131,7 @@ button:hover {
     color: white;
 }
 
-
 .error {
-
     margin-top: 12px;
 
     font-size: 13px;
@@ -190,39 +145,29 @@ button:hover {
 ========================= */
 
 #lovePage {
-
     display: none;
 }
 
-
 .heart {
-
     font-size: 60px;
 
     margin-bottom: 15px;
 
-    animation:
-        heartbeat 1s infinite;
+    animation: heartbeat 1s infinite;
 }
-
 
 @keyframes heartbeat {
 
-    0%,
-    100% {
-
+    0%, 100% {
         transform: scale(1);
     }
 
     50% {
-
         transform: scale(1.15);
     }
 }
 
-
 .question {
-
     font-size: 30px;
 
     font-weight: bold;
@@ -230,19 +175,14 @@ button:hover {
     margin-bottom: 30px;
 }
 
-
 .game-area {
+    width: 100%;
+    height: 100px;
 
     position: relative;
-
-    width: 100%;
-
-    height: 100px;
 }
 
-
 .yes {
-
     background: #ff4f91;
 
     color: white;
@@ -254,7 +194,6 @@ button:hover {
 ========================= */
 
 .no {
-
     position: fixed;
 
     left: 50%;
@@ -265,18 +204,48 @@ button:hover {
     color: black;
 
     z-index: 5000;
+
+    transition:
+        left 0.15s ease,
+        top 0.15s ease;
 }
 
 
 /* =========================
-   LOVE POPUP
+   CELEBRATION SCREEN
 ========================= */
 
-#successPopup {
-
+#celebration {
     display: none;
 
     position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #ff4fa3,
+            #7b176b 45%,
+            #16001f 100%
+        );
+
+    z-index: 10000;
+
+    overflow: hidden;
+}
+
+
+/* =========================
+   LOVE MESSAGE
+========================= */
+
+#loveMessage {
+
+    position: absolute;
 
     left: 50%;
     top: 50%;
@@ -289,28 +258,26 @@ button:hover {
 
     text-align: center;
 
-    font-size: 34px;
+    font-size: 36px;
 
     font-weight: bold;
 
     color: white;
 
-    z-index: 99999;
-
     text-shadow:
-        0 0 10px #ff4fa3,
+        0 0 10px white,
         0 0 25px #ff4fa3,
-        0 0 40px white;
+        0 0 50px #ff4fa3;
+
+    z-index: 20000;
 
     animation:
-        popupLove 0.8s ease forwards;
+        messagePop 0.9s ease forwards;
 }
 
-
-@keyframes popupLove {
+@keyframes messagePop {
 
     0% {
-
         transform:
             translate(-50%, -50%)
             scale(0);
@@ -319,7 +286,6 @@ button:hover {
     }
 
     60% {
-
         transform:
             translate(-50%, -50%)
             scale(1.25);
@@ -328,7 +294,6 @@ button:hover {
     }
 
     100% {
-
         transform:
             translate(-50%, -50%)
             scale(1);
@@ -339,7 +304,7 @@ button:hover {
 
 
 /* =========================
-   BURST PARTICLES
+   CENTER PARTICLES
 ========================= */
 
 .particle {
@@ -349,24 +314,22 @@ button:hover {
     left: 50%;
     top: 50%;
 
-    font-size: 28px;
-
     pointer-events: none;
 
-    z-index: 99998;
+    z-index: 15000;
 
     animation:
-        burst 1.6s ease-out forwards;
+        centerBlast 1.8s ease-out forwards;
 }
 
-
-@keyframes burst {
+@keyframes centerBlast {
 
     0% {
 
         transform:
             translate(-50%, -50%)
-            scale(0);
+            scale(0)
+            rotate(0deg);
 
         opacity: 1;
     }
@@ -378,8 +341,8 @@ button:hover {
                 calc(-50% + var(--x)),
                 calc(-50% + var(--y))
             )
-            rotate(var(--rotate))
-            scale(1.5);
+            scale(1.4)
+            rotate(var(--rotate));
 
         opacity: 0;
     }
@@ -387,42 +350,82 @@ button:hover {
 
 
 /* =========================
-   BACKGROUND HEARTS
+   CORNER PAPER BLAST
 ========================= */
 
-.bg-heart {
+.cornerParticle {
 
     position: fixed;
 
-    bottom: -50px;
-
-    font-size: 22px;
-
-    opacity: 0.15;
-
     pointer-events: none;
 
+    z-index: 16000;
+
+    width: 12px;
+    height: 20px;
+
     animation:
-        floatHeart 7s linear infinite;
+        cornerBlast 1.8s ease-out forwards;
 }
 
-
-@keyframes floatHeart {
+@keyframes cornerBlast {
 
     0% {
 
         transform:
-            translateY(0)
-            rotate(0deg);
+            translate(0, 0)
+            rotate(0deg)
+            scale(0);
 
+        opacity: 1;
     }
 
     100% {
 
         transform:
-            translateY(-110vh)
-            rotate(360deg);
+            translate(
+                var(--x),
+                var(--y)
+            )
+            rotate(var(--rotate))
+            scale(1);
 
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   FLASH
+========================= */
+
+#flash {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: white;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 19000;
+}
+
+.flashAnimation {
+    animation: flashEffect 0.45s ease-out;
+}
+
+@keyframes flashEffect {
+
+    0% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0;
     }
 }
 
@@ -432,47 +435,6 @@ button:hover {
 
 
 <body>
-
-
-<!-- =========================
-     BACKGROUND HEARTS
-========================= -->
-
-<div
-    class="bg-heart"
-    style="left:10%; animation-delay:0s;"
->
-    ❤️
-</div>
-
-<div
-    class="bg-heart"
-    style="left:30%; animation-delay:2s;"
->
-    💖
-</div>
-
-<div
-    class="bg-heart"
-    style="left:50%; animation-delay:4s;"
->
-    💞
-</div>
-
-<div
-    class="bg-heart"
-    style="left:70%; animation-delay:1s;"
->
-    ❤️
-</div>
-
-<div
-    class="bg-heart"
-    style="left:90%; animation-delay:3s;"
->
-    💗
-</div>
-
 
 
 <!-- =========================
@@ -490,7 +452,6 @@ button:hover {
             🔐 Enter Password
         </h1>
 
-
         <input
             type="password"
             id="password"
@@ -499,11 +460,9 @@ button:hover {
             placeholder="Enter numbers only"
         >
 
-
         <div class="small">
             DOB
         </div>
-
 
         <button
             class="enter"
@@ -511,7 +470,6 @@ button:hover {
         >
             ENTER
         </button>
-
 
         <div
             class="error"
@@ -539,11 +497,9 @@ button:hover {
             ❤️
         </div>
 
-
         <div class="question">
             Do you love me?
         </div>
-
 
         <div class="game-area">
 
@@ -553,7 +509,6 @@ button:hover {
             >
                 YES ❤️
             </button>
-
 
             <button
                 class="no"
@@ -573,24 +528,30 @@ button:hover {
 
 
 <!-- =========================
-     POPUP
+     CELEBRATION
 ========================= -->
 
-<div id="successPopup">
+<div id="celebration">
 
-    I love you too 💋❤️💞
+    <div id="loveMessage">
+        I love you too 💋❤️💞
+    </div>
 
 </div>
+
+
+<!-- FLASH -->
+
+<div id="flash"></div>
 
 
 
 <script>
 
+
 /* =========================
    PASSWORD
 ========================= */
-
-/* Change 1234 to your password */
 
 const correctPassword = "1002";
 
@@ -602,14 +563,11 @@ function checkPassword() {
             "password"
         ).value;
 
-
     const error =
         document.getElementById(
             "error"
         );
 
-
-    /* Only numbers */
 
     if (
         !/^[0-9]+$/.test(password)
@@ -622,8 +580,6 @@ function checkPassword() {
     }
 
 
-    /* Correct password */
-
     if (
         password === correctPassword
     ) {
@@ -632,7 +588,6 @@ function checkPassword() {
             "passwordPage"
         ).style.display =
             "none";
-
 
         document.getElementById(
             "lovePage"
@@ -654,7 +609,6 @@ function checkPassword() {
 
 /* =========================
    NO BUTTON
-   FULL SCREEN MOVEMENT
 ========================= */
 
 function runAway() {
@@ -665,7 +619,7 @@ function runAway() {
         );
 
 
-    const margin = 20;
+    const margin = 25;
 
 
     const maxX =
@@ -701,7 +655,6 @@ function runAway() {
     button.style.left =
         x + "px";
 
-
     button.style.top =
         y + "px";
 }
@@ -709,33 +662,98 @@ function runAway() {
 
 
 /* =========================
-   YES BUTTON
+   YES
 ========================= */
 
 function yesClicked() {
 
 
-    /* Hide NO */
+    /* Hide complete love page */
 
     document.getElementById(
-        "noButton"
+        "lovePage"
     ).style.display =
         "none";
 
 
-    /* Show popup */
+    /* Show celebration */
 
-    const popup =
+    const celebration =
         document.getElementById(
-            "successPopup"
+            "celebration"
         );
 
 
-    popup.style.display =
+    celebration.style.display =
         "block";
 
 
-    /* Emoji list */
+    /* Flash */
+
+    const flash =
+        document.getElementById(
+            "flash"
+        );
+
+
+    flash.classList.add(
+        "flashAnimation"
+    );
+
+
+    setTimeout(
+        function() {
+
+            flash.classList.remove(
+                "flashAnimation"
+            );
+
+        },
+        500
+    );
+
+
+    /* Center blast */
+
+    centerBlast();
+
+
+    /* Four corner blasts */
+
+    cornerBlast(
+        0,
+        0,
+        "top-left"
+    );
+
+    cornerBlast(
+        window.innerWidth,
+        0,
+        "top-right"
+    );
+
+    cornerBlast(
+        0,
+        window.innerHeight,
+        "bottom-left"
+    );
+
+    cornerBlast(
+        window.innerWidth,
+        window.innerHeight,
+        "bottom-right"
+    );
+
+}
+
+
+
+/* =========================
+   CENTER BLAST
+========================= */
+
+function centerBlast() {
+
 
     const emojis = [
 
@@ -753,11 +771,9 @@ function yesClicked() {
     ];
 
 
-    /* Create 100 particles */
-
     for (
         let i = 0;
-        i < 100;
+        i < 120;
         i++
     ) {
 
@@ -781,25 +797,202 @@ function yesClicked() {
             ];
 
 
-        /* Random direction */
+        particle.style.fontSize =
+            (
+                16 +
+                Math.random() * 28
+            ) + "px";
 
-        const x =
+
+        particle.style.setProperty(
+            "--x",
             (
                 Math.random() * 2 - 1
-            ) * 600;
+            ) * 650 + "px"
+        );
 
 
-        const y =
+        particle.style.setProperty(
+            "--y",
             (
                 Math.random() * 2 - 1
-            ) * 600;
+            ) * 650 + "px"
+        );
 
 
-        const rotate =
+        particle.style.setProperty(
+            "--rotate",
             (
                 Math.random() * 720 -
                 360
-            ) + "deg";
+            ) + "deg"
+        );
+
+
+        document.body.appendChild(
+            particle
+        );
+
+
+        setTimeout(
+            function() {
+
+                particle.remove();
+
+            },
+            1900
+        );
+
+    }
+
+}
+
+
+
+/* =========================
+   CORNER BLAST
+========================= */
+
+function cornerBlast(
+    startX,
+    startY,
+    corner
+) {
+
+
+    const colors = [
+
+        "#ff4fa3",
+        "#ffffff",
+        "#ffd166",
+        "#7df9ff",
+        "#c77dff",
+        "#ff6b6b"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < 45;
+        i++
+    ) {
+
+
+        const particle =
+            document.createElement(
+                "div"
+            );
+
+
+        particle.className =
+            "cornerParticle";
+
+
+        particle.style.left =
+            startX + "px";
+
+
+        particle.style.top =
+            startY + "px";
+
+
+        particle.style.background =
+            colors[
+                Math.floor(
+                    Math.random() *
+                    colors.length
+                )
+            ];
+
+
+        particle.style.width =
+            (
+                6 +
+                Math.random() * 10
+            ) + "px";
+
+
+        particle.style.height =
+            (
+                8 +
+                Math.random() * 18
+            ) + "px";
+
+
+        let x;
+        let y;
+
+
+        /*
+           Direction depends on corner
+        */
+
+
+        if (
+            corner === "top-left"
+        ) {
+
+            x =
+                50 +
+                Math.random() *
+                500;
+
+            y =
+                50 +
+                Math.random() *
+                500;
+
+        }
+
+
+        else if (
+            corner === "top-right"
+        ) {
+
+            x =
+                -50 -
+                Math.random() *
+                500;
+
+            y =
+                50 +
+                Math.random() *
+                500;
+
+        }
+
+
+        else if (
+            corner === "bottom-left"
+        ) {
+
+            x =
+                50 +
+                Math.random() *
+                500;
+
+            y =
+                -50 -
+                Math.random() *
+                500;
+
+        }
+
+
+        else {
+
+            x =
+                -50 -
+                Math.random() *
+                500;
+
+            y =
+                -50 -
+                Math.random() *
+                500;
+
+        }
 
 
         particle.style.setProperty(
@@ -816,17 +1009,11 @@ function yesClicked() {
 
         particle.style.setProperty(
             "--rotate",
-            rotate
-        );
-
-
-        /* Random size */
-
-        particle.style.fontSize =
             (
-                18 +
-                Math.random() * 28
-            ) + "px";
+                Math.random() * 720 -
+                360
+            ) + "deg"
+        );
 
 
         document.body.appendChild(
@@ -834,15 +1021,13 @@ function yesClicked() {
         );
 
 
-        /* Remove after animation */
-
         setTimeout(
             function() {
 
                 particle.remove();
 
             },
-            1700
+            1900
         );
 
     }
