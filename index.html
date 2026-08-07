@@ -1,173 +1,279 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Secret Game ❤️</title>
 
 <style>
+
+/* =========================
+   BASIC
+========================= */
+
 * {
     box-sizing: border-box;
 }
 
+html,
 body {
+    width: 100%;
+    height: 100%;
     margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    background:
-        radial-gradient(circle at 20% 20%, #ff4fa3 0%, transparent 25%),
-        radial-gradient(circle at 80% 80%, #6c63ff 0%, transparent 25%),
-        linear-gradient(135deg, #180020, #4b0b45, #12002b);
-    color: white;
 }
 
-/* ---------- COMMON SCREEN ---------- */
+body {
+
+    overflow: hidden;
+
+    font-family: Arial, sans-serif;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            #ff4fa3,
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            #6c63ff,
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #16001f,
+            #4b0b45,
+            #12002b
+        );
+}
+
+
+/* =========================
+   SCREEN
+========================= */
 
 .screen {
+
     width: 100%;
     height: 100vh;
+
     display: flex;
+
     justify-content: center;
     align-items: center;
 }
 
-/* ---------- CARD ---------- */
+
+/* =========================
+   CARD
+========================= */
 
 .card {
-    position: relative;
+
     width: 360px;
     min-height: 310px;
+
     padding: 40px 30px;
+
     text-align: center;
 
     border-radius: 25px;
 
-    background: rgba(255,255,255,0.13);
+    background:
+        rgba(255,255,255,0.13);
+
     backdrop-filter: blur(15px);
 
-    border: 1px solid rgba(255,255,255,0.2);
+    border:
+        1px solid rgba(255,255,255,0.25);
 
     box-shadow:
         0 20px 60px rgba(0,0,0,0.45);
 }
 
-/* ---------- PASSWORD PAGE ---------- */
+
+/* =========================
+   PASSWORD PAGE
+========================= */
 
 h1 {
-    margin: 0 0 25px;
+
+    margin-top: 0;
+    margin-bottom: 25px;
+
     font-size: 28px;
 }
 
+
 input {
+
     width: 100%;
+
     padding: 14px;
 
     border: none;
+
     outline: none;
 
     border-radius: 12px;
 
     text-align: center;
+
     font-size: 18px;
 
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 }
 
+
 .small {
+
     font-size: 12px;
+
     opacity: 0.7;
 
     margin-bottom: 15px;
+
+    text-align: center;
 }
 
+
 button {
+
     border: none;
+
     border-radius: 12px;
 
     padding: 13px 25px;
 
     font-size: 16px;
+
     font-weight: bold;
 
     cursor: pointer;
+
+    transition: transform 0.2s;
 }
 
+
+button:hover {
+
+    transform: scale(1.05);
+}
+
+
 .enter {
+
     width: 100%;
+
     background: #ff4fa3;
+
     color: white;
 }
 
-.enter:hover {
-    transform: scale(1.04);
-}
 
 .error {
+
     margin-top: 12px;
+
     font-size: 13px;
+
     color: #ffd0e8;
 }
 
 
-/* ---------- LOVE PAGE ---------- */
+/* =========================
+   LOVE PAGE
+========================= */
 
 #lovePage {
+
     display: none;
 }
 
+
 .heart {
+
     font-size: 60px;
+
     margin-bottom: 15px;
 
-    animation: heartbeat 1s infinite;
+    animation:
+        heartbeat 1s infinite;
 }
+
 
 @keyframes heartbeat {
 
-    0%, 100% {
+    0%,
+    100% {
+
         transform: scale(1);
     }
 
     50% {
+
         transform: scale(1.15);
     }
 }
 
+
 .question {
+
     font-size: 30px;
+
     font-weight: bold;
 
     margin-bottom: 30px;
 }
 
+
 .game-area {
+
     position: relative;
-    height: 100px;
+
     width: 100%;
+
+    height: 100px;
 }
 
+
 .yes {
+
     background: #ff4f91;
+
     color: white;
 }
 
+
+/* =========================
+   NO BUTTON
+========================= */
+
 .no {
-    background: white;
-    color: black;
 
     position: fixed;
 
     left: 50%;
     top: 55%;
 
-    z-index: 1000;
+    background: white;
+
+    color: black;
+
+    z-index: 5000;
 }
 
 
-/* ---------- SUCCESS MESSAGE ---------- */
+/* =========================
+   LOVE POPUP
+========================= */
 
-#success {
+#successPopup {
+
     display: none;
 
     position: fixed;
@@ -175,45 +281,69 @@ button {
     left: 50%;
     top: 50%;
 
-    transform: translate(-50%, -50%) scale(0);
+    transform:
+        translate(-50%, -50%)
+        scale(0);
 
     width: 90%;
 
     text-align: center;
 
     font-size: 34px;
+
     font-weight: bold;
 
-    z-index: 2000;
+    color: white;
 
-    animation: loveMessage 0.7s forwards;
+    z-index: 99999;
+
+    text-shadow:
+        0 0 10px #ff4fa3,
+        0 0 25px #ff4fa3,
+        0 0 40px white;
+
+    animation:
+        popupLove 0.8s ease forwards;
 }
 
-@keyframes loveMessage {
+
+@keyframes popupLove {
 
     0% {
+
         transform:
             translate(-50%, -50%)
             scale(0);
+
+        opacity: 0;
     }
 
-    70% {
+    60% {
+
         transform:
             translate(-50%, -50%)
-            scale(1.2);
+            scale(1.25);
+
+        opacity: 1;
     }
 
     100% {
+
         transform:
             translate(-50%, -50%)
             scale(1);
+
+        opacity: 1;
     }
 }
 
 
-/* ---------- CELEBRATION PARTICLES ---------- */
+/* =========================
+   BURST PARTICLES
+========================= */
 
 .particle {
+
     position: fixed;
 
     left: 50%;
@@ -223,15 +353,17 @@ button {
 
     pointer-events: none;
 
-    z-index: 3000;
+    z-index: 99998;
 
     animation:
-        burst 1.5s ease-out forwards;
+        burst 1.6s ease-out forwards;
 }
+
 
 @keyframes burst {
 
     0% {
+
         transform:
             translate(-50%, -50%)
             scale(0);
@@ -240,66 +372,123 @@ button {
     }
 
     100% {
+
         transform:
             translate(
                 calc(-50% + var(--x)),
                 calc(-50% + var(--y))
             )
-            scale(1.4);
+            rotate(var(--rotate))
+            scale(1.5);
 
         opacity: 0;
     }
 }
 
 
-/* ---------- EXTRA BACKGROUND HEARTS ---------- */
+/* =========================
+   BACKGROUND HEARTS
+========================= */
 
 .bg-heart {
+
     position: fixed;
 
-    font-size: 20px;
+    bottom: -50px;
+
+    font-size: 22px;
 
     opacity: 0.15;
 
-    animation: floatHeart 6s linear infinite;
-
     pointer-events: none;
+
+    animation:
+        floatHeart 7s linear infinite;
 }
+
 
 @keyframes floatHeart {
 
-    from {
-        transform: translateY(100vh);
+    0% {
+
+        transform:
+            translateY(0)
+            rotate(0deg);
+
     }
 
-    to {
-        transform: translateY(-100vh);
+    100% {
+
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
     }
 }
 
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- BACKGROUND DECORATION -->
+<!-- =========================
+     BACKGROUND HEARTS
+========================= -->
 
-<div class="bg-heart" style="left:10%; animation-delay:1s;">❤️</div>
-<div class="bg-heart" style="left:30%; animation-delay:3s;">💖</div>
-<div class="bg-heart" style="left:50%; animation-delay:0s;">💞</div>
-<div class="bg-heart" style="left:70%; animation-delay:2s;">❤️</div>
-<div class="bg-heart" style="left:90%; animation-delay:4s;">💗</div>
+<div
+    class="bg-heart"
+    style="left:10%; animation-delay:0s;"
+>
+    ❤️
+</div>
+
+<div
+    class="bg-heart"
+    style="left:30%; animation-delay:2s;"
+>
+    💖
+</div>
+
+<div
+    class="bg-heart"
+    style="left:50%; animation-delay:4s;"
+>
+    💞
+</div>
+
+<div
+    class="bg-heart"
+    style="left:70%; animation-delay:1s;"
+>
+    ❤️
+</div>
+
+<div
+    class="bg-heart"
+    style="left:90%; animation-delay:3s;"
+>
+    💗
+</div>
 
 
-<!-- ================= PASSWORD PAGE ================= -->
 
-<div class="screen" id="passwordPage">
+<!-- =========================
+     PASSWORD PAGE
+========================= -->
+
+<div
+    class="screen"
+    id="passwordPage"
+>
 
     <div class="card">
 
-        <h1>🔐 Enter Password</h1>
+        <h1>
+            🔐 Enter Password
+        </h1>
 
 
         <input
@@ -335,7 +524,9 @@ button {
 
 
 
-<!-- ================= LOVE PAGE ================= -->
+<!-- =========================
+     LOVE PAGE
+========================= -->
 
 <div
     class="screen"
@@ -375,12 +566,19 @@ button {
 
         </div>
 
-
-        <div id="success">
-            I love you too 💋❤️💞
-        </div>
-
     </div>
+
+</div>
+
+
+
+<!-- =========================
+     POPUP
+========================= -->
+
+<div id="successPopup">
+
+    I love you too 💋❤️💞
 
 </div>
 
@@ -388,9 +586,11 @@ button {
 
 <script>
 
-/* =====================================
+/* =========================
    PASSWORD
-===================================== */
+========================= */
+
+/* Change 1234 to your password */
 
 const correctPassword = "1002";
 
@@ -398,16 +598,22 @@ const correctPassword = "1002";
 function checkPassword() {
 
     const password =
-        document.getElementById("password").value;
+        document.getElementById(
+            "password"
+        ).value;
 
 
     const error =
-        document.getElementById("error");
+        document.getElementById(
+            "error"
+        );
 
 
-    /* Numbers only */
+    /* Only numbers */
 
-    if (!/^[0-9]+$/.test(password)) {
+    if (
+        !/^[0-9]+$/.test(password)
+    ) {
 
         error.innerText =
             "Please enter numbers only 😅";
@@ -418,16 +624,20 @@ function checkPassword() {
 
     /* Correct password */
 
-    if (password === correctPassword) {
+    if (
+        password === correctPassword
+    ) {
 
         document.getElementById(
             "passwordPage"
-        ).style.display = "none";
+        ).style.display =
+            "none";
 
 
         document.getElementById(
             "lovePage"
-        ).style.display = "flex";
+        ).style.display =
+            "flex";
 
     }
 
@@ -442,14 +652,17 @@ function checkPassword() {
 
 
 
-/* =====================================
-   NO BUTTON RUNS AROUND FULL SCREEN
-===================================== */
+/* =========================
+   NO BUTTON
+   FULL SCREEN MOVEMENT
+========================= */
 
 function runAway() {
 
     const button =
-        document.getElementById("noButton");
+        document.getElementById(
+            "noButton"
+        );
 
 
     const margin = 20;
@@ -470,13 +683,19 @@ function runAway() {
     const x =
         margin +
         Math.random() *
-        (maxX - margin);
+        (
+            maxX -
+            margin
+        );
 
 
     const y =
         margin +
         Math.random() *
-        (maxY - margin);
+        (
+            maxY -
+            margin
+        );
 
 
     button.style.left =
@@ -485,46 +704,56 @@ function runAway() {
 
     button.style.top =
         y + "px";
-
 }
 
 
 
-/* =====================================
+/* =========================
    YES BUTTON
-===================================== */
+========================= */
 
 function yesClicked() {
+
 
     /* Hide NO */
 
     document.getElementById(
         "noButton"
-    ).style.display = "none";
+    ).style.display =
+        "none";
 
 
-    /* Show message */
+    /* Show popup */
 
-    const message =
-        document.getElementById("success");
+    const popup =
+        document.getElementById(
+            "successPopup"
+        );
 
 
-    message.style.display =
+    popup.style.display =
         "block";
 
 
-    /* Celebration burst */
+    /* Emoji list */
 
     const emojis = [
+
         "❤️",
         "💖",
         "💞",
         "💋",
         "✨",
         "💕",
-        "🥰"
+        "🥰",
+        "💗",
+        "💓",
+        "🌟"
+
     ];
 
+
+    /* Create 100 particles */
 
     for (
         let i = 0;
@@ -532,15 +761,18 @@ function yesClicked() {
         i++
     ) {
 
+
         const particle =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         particle.className =
             "particle";
 
 
-        particle.innerHTML =
+        particle.innerText =
             emojis[
                 Math.floor(
                     Math.random() *
@@ -549,23 +781,52 @@ function yesClicked() {
             ];
 
 
+        /* Random direction */
+
+        const x =
+            (
+                Math.random() * 2 - 1
+            ) * 600;
+
+
+        const y =
+            (
+                Math.random() * 2 - 1
+            ) * 600;
+
+
+        const rotate =
+            (
+                Math.random() * 720 -
+                360
+            ) + "deg";
+
+
         particle.style.setProperty(
             "--x",
-            (Math.random() * 2 - 1) *
-            600 + "px"
+            x + "px"
         );
 
 
         particle.style.setProperty(
             "--y",
-            (Math.random() * 2 - 1) *
-            600 + "px"
+            y + "px"
         );
 
 
+        particle.style.setProperty(
+            "--rotate",
+            rotate
+        );
+
+
+        /* Random size */
+
         particle.style.fontSize =
-            (18 + Math.random() * 25) +
-            "px";
+            (
+                18 +
+                Math.random() * 28
+            ) + "px";
 
 
         document.body.appendChild(
@@ -573,11 +834,15 @@ function yesClicked() {
         );
 
 
+        /* Remove after animation */
+
         setTimeout(
-            () => {
+            function() {
+
                 particle.remove();
+
             },
-            1600
+            1700
         );
 
     }
@@ -587,4 +852,5 @@ function yesClicked() {
 </script>
 
 </body>
+
 </html>
