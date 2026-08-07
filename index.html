@@ -1,260 +1,590 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Secret Game ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Game ❤️</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
+* {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #21002e, #8b176b, #28004a);
-            color: white;
-        }
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background:
+        radial-gradient(circle at 20% 20%, #ff4fa3 0%, transparent 25%),
+        radial-gradient(circle at 80% 80%, #6c63ff 0%, transparent 25%),
+        linear-gradient(135deg, #180020, #4b0b45, #12002b);
+    color: white;
+}
 
-        .screen {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* ---------- COMMON SCREEN ---------- */
 
-        .card {
-            position: relative;
-            width: 360px;
-            min-height: 300px;
-            padding: 40px 30px;
-            text-align: center;
-            border-radius: 25px;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-        }
+.screen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .small {
-            font-size: 13px;
-            opacity: 0.7;
-            margin-bottom: 10px;
-        }
+/* ---------- CARD ---------- */
 
-        h1 {
-            margin-bottom: 25px;
-        }
+.card {
+    position: relative;
+    width: 360px;
+    min-height: 310px;
+    padding: 40px 30px;
+    text-align: center;
 
-        input {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 18px;
-            outline: none;
-            margin-bottom: 15px;
-        }
+    border-radius: 25px;
 
-        button {
-            border: none;
-            border-radius: 12px;
-            padding: 13px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    background: rgba(255,255,255,0.13);
+    backdrop-filter: blur(15px);
 
-        .enter {
-            width: 100%;
-            background: #ff4fa3;
-            color: white;
-        }
+    border: 1px solid rgba(255,255,255,0.2);
 
-        .error {
-            margin-top: 12px;
-            font-size: 13px;
-        }
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.45);
+}
 
-        #lovePage {
-            display: none;
-        }
+/* ---------- PASSWORD PAGE ---------- */
 
-        .heart {
-            font-size: 55px;
-            margin-bottom: 15px;
-        }
+h1 {
+    margin: 0 0 25px;
+    font-size: 28px;
+}
 
-        .question {
-            font-size: 28px;
-            margin-bottom: 30px;
-        }
+input {
+    width: 100%;
+    padding: 14px;
 
-        .game-area {
-            position: relative;
-            height: 120px;
-            width: 100%;
-        }
+    border: none;
+    outline: none;
 
-        .yes {
-            background: #ff4f91;
-            color: white;
-        }
+    border-radius: 12px;
 
-        .no {
-            background: white;
-            color: black;
-            position: fixed;
-            left: 50%;
-            top: 55%;
-            z-index:1000;
-        }
+    text-align: center;
+    font-size: 18px;
 
-        #success {
-            display: none;
-            margin-top: 15px;
-            font-size: 22px;
-        }
-    </style>
+    margin-bottom: 8px;
+}
+
+.small {
+    font-size: 12px;
+    opacity: 0.7;
+
+    margin-bottom: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 12px;
+
+    padding: 13px 25px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.enter {
+    width: 100%;
+    background: #ff4fa3;
+    color: white;
+}
+
+.enter:hover {
+    transform: scale(1.04);
+}
+
+.error {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #ffd0e8;
+}
+
+
+/* ---------- LOVE PAGE ---------- */
+
+#lovePage {
+    display: none;
+}
+
+.heart {
+    font-size: 60px;
+    margin-bottom: 15px;
+
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.question {
+    font-size: 30px;
+    font-weight: bold;
+
+    margin-bottom: 30px;
+}
+
+.game-area {
+    position: relative;
+    height: 100px;
+    width: 100%;
+}
+
+.yes {
+    background: #ff4f91;
+    color: white;
+}
+
+.no {
+    background: white;
+    color: black;
+
+    position: fixed;
+
+    left: 50%;
+    top: 55%;
+
+    z-index: 1000;
+}
+
+
+/* ---------- SUCCESS MESSAGE ---------- */
+
+#success {
+    display: none;
+
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%) scale(0);
+
+    width: 90%;
+
+    text-align: center;
+
+    font-size: 34px;
+    font-weight: bold;
+
+    z-index: 2000;
+
+    animation: loveMessage 0.7s forwards;
+}
+
+@keyframes loveMessage {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            scale(0);
+    }
+
+    70% {
+        transform:
+            translate(-50%, -50%)
+            scale(1.2);
+    }
+
+    100% {
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+}
+
+
+/* ---------- CELEBRATION PARTICLES ---------- */
+
+.particle {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    font-size: 28px;
+
+    pointer-events: none;
+
+    z-index: 3000;
+
+    animation:
+        burst 1.5s ease-out forwards;
+}
+
+@keyframes burst {
+
+    0% {
+        transform:
+            translate(-50%, -50%)
+            scale(0);
+
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            scale(1.4);
+
+        opacity: 0;
+    }
+}
+
+
+/* ---------- EXTRA BACKGROUND HEARTS ---------- */
+
+.bg-heart {
+    position: fixed;
+
+    font-size: 20px;
+
+    opacity: 0.15;
+
+    animation: floatHeart 6s linear infinite;
+
+    pointer-events: none;
+}
+
+@keyframes floatHeart {
+
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(-100vh);
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-    <!-- PASSWORD PAGE -->
 
-    <div class="screen" id="passwordPage">
+<!-- BACKGROUND DECORATION -->
 
-        <div class="card">
+<div class="bg-heart" style="left:10%; animation-delay:1s;">❤️</div>
+<div class="bg-heart" style="left:30%; animation-delay:3s;">💖</div>
+<div class="bg-heart" style="left:50%; animation-delay:0s;">💞</div>
+<div class="bg-heart" style="left:70%; animation-delay:2s;">❤️</div>
+<div class="bg-heart" style="left:90%; animation-delay:4s;">💗</div>
 
-            <div class="small">BOD</div>
 
-            <h1>🔐 Enter Password</h1>
+<!-- ================= PASSWORD PAGE ================= -->
 
-            <input
-                type="password"
-                id="password"
-                inputmode="numeric"
-                placeholder="Enter numbers only"
+<div class="screen" id="passwordPage">
+
+    <div class="card">
+
+        <h1>🔐 Enter Password</h1>
+
+
+        <input
+            type="password"
+            id="password"
+            inputmode="numeric"
+            maxlength="10"
+            placeholder="Enter numbers only"
+        >
+
+
+        <div class="small">
+            DOB
+        </div>
+
+
+        <button
+            class="enter"
+            onclick="checkPassword()"
+        >
+            ENTER
+        </button>
+
+
+        <div
+            class="error"
+            id="error"
+        ></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= LOVE PAGE ================= -->
+
+<div
+    class="screen"
+    id="lovePage"
+>
+
+    <div class="card">
+
+        <div class="heart">
+            ❤️
+        </div>
+
+
+        <div class="question">
+            Do you love me?
+        </div>
+
+
+        <div class="game-area">
+
+            <button
+                class="yes"
+                onclick="yesClicked()"
             >
-
-            <button class="enter" onclick="checkPassword()">
-                ENTER
+                YES ❤️
             </button>
 
-            <div class="error" id="error"></div>
 
+            <button
+                class="no"
+                id="noButton"
+                onmouseover="runAway()"
+                onclick="runAway()"
+            >
+                NO 😏
+            </button>
+
+        </div>
+
+
+        <div id="success">
+            I love you too 💋❤️💞
         </div>
 
     </div>
 
-
-    <!-- LOVE PAGE -->
-
-    <div class="screen" id="lovePage">
-
-        <div class="card">
-
-            <div class="heart">❤️</div>
-
-            <div class="question">
-                Do you love me?
-            </div>
-
-            <div class="game-area">
-
-                <button class="yes" onclick="yesClicked()">
-                    YES ❤️
-                </button>
-
-                <button
-                    class="no"
-                    id="noButton"
-                    onmouseover="runAway()"
-                    onclick="runAway()">
-                    NO 😏
-                </button>
-
-            </div>
-
-            <div id="success">
-                I knew it! ❤️🥰
-            </div>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <script>
 
-        // 🔑 CHANGE PASSWORD HERE
-        const correctPassword = "1002";
+<script>
 
+/* =====================================
+   PASSWORD
+===================================== */
 
-        function checkPassword() {
-
-            const password =
-                document.getElementById("password").value;
-
-            const error =
-                document.getElementById("error");
-
-            if (!/^[0-9]+$/.test(password)) {
-
-                error.innerText =
-                    "Please enter numbers only 😅";
-
-                return;
-            }
-
-            if (password === correctPassword) {
-
-                document.getElementById("passwordPage").style.display =
-                    "none";
-
-                document.getElementById("lovePage").style.display =
-                    "flex";
-
-            } else {
-
-                error.innerText =
-                    "Wrong password 😜";
-
-            }
-        }
+const correctPassword = "1002";
 
 
-        function yesClicked() {
+function checkPassword() {
 
-            document.getElementById("success").style.display =
-                "block";
-
-            document.getElementById("noButton").style.display =
-                "none";
-        }
+    const password =
+        document.getElementById("password").value;
 
 
-        function runAway() {
+    const error =
+        document.getElementById("error");
 
-    const button = document.getElementById("noButton");
+
+    /* Numbers only */
+
+    if (!/^[0-9]+$/.test(password)) {
+
+        error.innerText =
+            "Please enter numbers only 😅";
+
+        return;
+    }
+
+
+    /* Correct password */
+
+    if (password === correctPassword) {
+
+        document.getElementById(
+            "passwordPage"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "lovePage"
+        ).style.display = "flex";
+
+    }
+
+    else {
+
+        error.innerText =
+            "Wrong password 😜 Try again!";
+
+    }
+
+}
+
+
+
+/* =====================================
+   NO BUTTON RUNS AROUND FULL SCREEN
+===================================== */
+
+function runAway() {
+
+    const button =
+        document.getElementById("noButton");
+
 
     const margin = 20;
 
-    const maxX = window.innerWidth - button.offsetWidth - margin;
-    const maxY = window.innerHeight - button.offsetHeight - margin;
 
-    const x = margin + Math.random() * (maxX - margin);
-    const y = margin + Math.random() * (maxY - margin);
+    const maxX =
+        window.innerWidth -
+        button.offsetWidth -
+        margin;
 
-    button.style.position = "fixed";
-    button.style.left = x + "px";
-    button.style.top = y + "px";
 
-        }
+    const maxY =
+        window.innerHeight -
+        button.offsetHeight -
+        margin;
 
-    </script>
+
+    const x =
+        margin +
+        Math.random() *
+        (maxX - margin);
+
+
+    const y =
+        margin +
+        Math.random() *
+        (maxY - margin);
+
+
+    button.style.left =
+        x + "px";
+
+
+    button.style.top =
+        y + "px";
+
+}
+
+
+
+/* =====================================
+   YES BUTTON
+===================================== */
+
+function yesClicked() {
+
+    /* Hide NO */
+
+    document.getElementById(
+        "noButton"
+    ).style.display = "none";
+
+
+    /* Show message */
+
+    const message =
+        document.getElementById("success");
+
+
+    message.style.display =
+        "block";
+
+
+    /* Celebration burst */
+
+    const emojis = [
+        "❤️",
+        "💖",
+        "💞",
+        "💋",
+        "✨",
+        "💕",
+        "🥰"
+    ];
+
+
+    for (
+        let i = 0;
+        i < 100;
+        i++
+    ) {
+
+        const particle =
+            document.createElement("div");
+
+
+        particle.className =
+            "particle";
+
+
+        particle.innerHTML =
+            emojis[
+                Math.floor(
+                    Math.random() *
+                    emojis.length
+                )
+            ];
+
+
+        particle.style.setProperty(
+            "--x",
+            (Math.random() * 2 - 1) *
+            600 + "px"
+        );
+
+
+        particle.style.setProperty(
+            "--y",
+            (Math.random() * 2 - 1) *
+            600 + "px"
+        );
+
+
+        particle.style.fontSize =
+            (18 + Math.random() * 25) +
+            "px";
+
+
+        document.body.appendChild(
+            particle
+        );
+
+
+        setTimeout(
+            () => {
+                particle.remove();
+            },
+            1600
+        );
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>
