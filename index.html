@@ -1,12 +1,260 @@
-﻿<html>
-<head><tittle>R.A.D.A.V</tittle></head>
-<body>
-<table border "2" width"50%">
-<tr><td rowspan ="2">year</td>
-<td colspan ="3"> student</td></tr>
-<tr><td>boys</td><td>girls</td><td>total</td></tr>
-<tr><td>2004</td><td>25</td><td>30</td><td>55</td></tr>
-<tr><td>2005</td><td>80</td><td>25</td><td>105</td</tr>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secret Game ❤️</title>
 
-</body><html>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #21002e, #8b176b, #28004a);
+            color: white;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            position: relative;
+            width: 360px;
+            min-height: 300px;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        .small {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 18px;
+            outline: none;
+            margin-bottom: 15px;
+        }
+
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 13px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .enter {
+            width: 100%;
+            background: #ff4fa3;
+            color: white;
+        }
+
+        .error {
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        #lovePage {
+            display: none;
+        }
+
+        .heart {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .question {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .game-area {
+            position: relative;
+            height: 120px;
+            width: 100%;
+        }
+
+        .yes {
+            background: #ff4f91;
+            color: white;
+        }
+
+        .no {
+            background: white;
+            color: black;
+            position: fixed;
+            left: 50%;
+            top: 55%;
+            z-index:1000;
+        }
+
+        #success {
+            display: none;
+            margin-top: 15px;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PASSWORD PAGE -->
+
+    <div class="screen" id="passwordPage">
+
+        <div class="card">
+
+            <div class="small">BOD</div>
+
+            <h1>🔐 Enter Password</h1>
+
+            <input
+                type="password"
+                id="password"
+                inputmode="numeric"
+                placeholder="Enter numbers only"
+            >
+
+            <button class="enter" onclick="checkPassword()">
+                ENTER
+            </button>
+
+            <div class="error" id="error"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LOVE PAGE -->
+
+    <div class="screen" id="lovePage">
+
+        <div class="card">
+
+            <div class="heart">❤️</div>
+
+            <div class="question">
+                Do you love me?
+            </div>
+
+            <div class="game-area">
+
+                <button class="yes" onclick="yesClicked()">
+                    YES ❤️
+                </button>
+
+                <button
+                    class="no"
+                    id="noButton"
+                    onmouseover="runAway()"
+                    onclick="runAway()">
+                    NO 😏
+                </button>
+
+            </div>
+
+            <div id="success">
+                I knew it! ❤️🥰
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // 🔑 CHANGE PASSWORD HERE
+        const correctPassword = "1002";
+
+
+        function checkPassword() {
+
+            const password =
+                document.getElementById("password").value;
+
+            const error =
+                document.getElementById("error");
+
+            if (!/^[0-9]+$/.test(password)) {
+
+                error.innerText =
+                    "Please enter numbers only 😅";
+
+                return;
+            }
+
+            if (password === correctPassword) {
+
+                document.getElementById("passwordPage").style.display =
+                    "none";
+
+                document.getElementById("lovePage").style.display =
+                    "flex";
+
+            } else {
+
+                error.innerText =
+                    "Wrong password 😜";
+
+            }
+        }
+
+
+        function yesClicked() {
+
+            document.getElementById("success").style.display =
+                "block";
+
+            document.getElementById("noButton").style.display =
+                "none";
+        }
+
+
+        function runAway() {
+
+    const button = document.getElementById("noButton");
+
+    const margin = 20;
+
+    const maxX = window.innerWidth - button.offsetWidth - margin;
+    const maxY = window.innerHeight - button.offsetHeight - margin;
+
+    const x = margin + Math.random() * (maxX - margin);
+    const y = margin + Math.random() * (maxY - margin);
+
+    button.style.position = "fixed";
+    button.style.left = x + "px";
+    button.style.top = y + "px";
+
+        }
+
+    </script>
+
+</body>
+</html>
