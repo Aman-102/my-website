@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         * {
-
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -131,7 +130,7 @@
 
         .error-msg { color: #ff2a2a; font-size: 0.85rem; margin-top: 12px; display: none; font-weight: 600; }
 
-        /* MEMORIES FULL PHOTO GALLERY - NO INNER BOX INSIDE BOX */
+        /* MEMORIES FULL PHOTO GALLERY */
         .photo-gallery-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -227,6 +226,49 @@
             background: linear-gradient(135deg, #ffe082, #ffb300); display: flex; flex-direction: column; justify-content: center; align-items: center; color: #5d4037; font-weight: 800; cursor: pointer; z-index: 5;
         }
 
+        /* MARRIAGE PROPOSAL PAGE STYLES */
+        .ring-icon { font-size: 3.5rem; animation: ringBounce 1.5s infinite alternate; margin-bottom: 10px; }
+        @keyframes ringBounce {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-10px) scale(1.1); }
+        }
+
+        .propose-btn-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 25px;
+            position: relative;
+            min-height: 60px;
+        }
+
+        .yes-btn {
+            background: #28a745;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            transition: all 0.3s;
+        }
+        .yes-btn:hover { transform: scale(1.1); }
+
+        .no-btn {
+            background: #dc3545;
+            color: white;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
         /* DARK LUXURY FINALE POPUP OVERLAY */
         .finale-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -254,7 +296,7 @@
         
         .finale-text {
             color: #ff3366;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
             text-shadow: 0 0 15px #ff3366, 0 0 30px #ff0044;
             animation: glowText 1.5s ease-in-out infinite alternate;
@@ -289,7 +331,7 @@
         <p id="qText" style="font-weight: 600; color: #333; margin-top: 10px;"></p>
         <div class="options-grid" id="optionsBox"></div>
         <p class="error-msg" id="quizError">Wrong answer! Try again sweetheart! 🙈</p>
-    </div><!-- PAGE 3 (OUR PRECIOUS MEMORIES - NO BOX INSIDE BOX) -->
+    </div><!-- PAGE 3 -->
     <div class="page" id="page3">
         <h2>Our Precious Memories 📸</h2>
         <div class="photo-gallery-grid">
@@ -357,21 +399,33 @@
                 <span id="scratchText" style="margin-top: 5px;">Tap 7 times to scratch!</span>
             </div>
         </div>
-        <button class="btn" id="grandYesBtn" style="font-size: 1.2rem; padding: 12px 35px; display: none;" onclick="triggerGrandFinale()">Yeee 🤩🤩</button>
+        <button class="btn" id="grandYesBtn" style="font-size: 1.2rem; padding: 12px 35px; display: none;" onclick="nextPage(7)">Yeee 🤩🤩</button>
+    </div>
+
+    <!-- PAGE 7: MARRY ME PROPOSAL -->
+    <div class="page" id="page7">
+        <div class="ring-icon">💍✨</div>
+        <h2 style="font-size: 1.8rem;">Will You Marry Me?</h2>
+        <p style="font-size: 1.2rem; font-weight: 700; color: #ff3366; margin-top: 10px;">I love you yr! ❤️</p>
+        <p style="font-size: 0.9rem; color: #666; margin-top: 8px;">Will you spend the rest of your life with me?</p>
+        
+        <div class="propose-btn-box">
+            <button class="yes-btn" onclick="triggerGrandFinale()">YES! 💖</button>
+            <button class="no-btn" id="noBtn" onmouseover="moveNoBtn()" onclick="moveNoBtn()">NO 😜</button>
+        </div>
     </div>
 
     <!-- BLACK LUXURY GRAND FINALE OVERLAY -->
     <div class="finale-overlay" id="finaleOverlay">
         <div class="finale-card">
-            <div class="finale-text">I LOVE YOU 💋❤️</div>
-            <p style="margin-top: 18px; color: #ffb3c6; font-size: 1.1rem; font-weight: 600; text-shadow: 0 0 8px rgba(255,179,198,0.5);">
-                Forever & Always Yours! ✨💫
+            <div class="finale-text">SHE SAID YES! 💍🎉</div>
+            <p style="margin-top: 18px; color: #ffb3c6; font-size: 1.2rem; font-weight: 600; text-shadow: 0 0 8px rgba(255,179,198,0.5);">
+                I Love You So Much Yr! 💋❤️<br>Forever & Always Yours! ✨💫
             </p>
         </div>
     </div>
 
     <script>
-        // Floating Background Hearts
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('bg-heart');
@@ -384,14 +438,12 @@
         }
         setInterval(createHeart, 300);
 
-        // Page Change Function
         function nextPage(pageNum) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
             let targetPage = document.getElementById('page' + pageNum);
             targetPage.classList.add('active-page');
         }
 
-        // Passcode Input Logic
         function moveNext(elem, index) {
             if (elem.value.length === 1 && index < 3) {
                 document.querySelectorAll('.pin-input')[index + 1].focus();
@@ -424,13 +476,12 @@
             }
         }
 
-        // Quiz Questions Data
         const questions = [
             { q: "Where did we first start talking?", options: ["WhatsApp", "Instagram", "Snapchat", "Call"], ans: 1 },
             { q: "What is my favorite nickname you call me?", options: ["Sweetuu", "Baby", "Amuu", "Babudiiii"], ans: 2 },
             { q: "Which part of my body do you love the most?", options: ["hairs", "Face", "leg", "lip"], ans: 0 },
             { q: "What is my phone's password?", options: ["1243", "9905", "5567", "5689"], ans: 3 },
-            { q: "What thing do I do that irritates you the most?", options: ["Gussa", "Masti", "Pyarrr", "Pagalpan"], ans: 3 }
+            { q: "What thing do I do that irritates you the most?", options: ["Gussa", "Masti", "Pyarrr", "Pagalpan"], ans: 0 }
         ];
 
         let currentQ = 0;
@@ -481,7 +532,6 @@
             elem.classList.toggle('flipped');
         }
 
-        // Single Pick Coupon Logic
         let couponPicked = false;
         function pickCoupon(elem, rewardText) {
             if (!couponPicked) {
@@ -516,7 +566,13 @@
             }
         }
 
-        // DARK GRAND FINALE WITH visual EFFECTS
+        function moveNoBtn() {
+            let btn = document.getElementById('noBtn');
+            let x = Math.random() * 160 - 80;
+            let y = Math.random() * 100 - 50;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
         function triggerGrandFinale() {
             document.getElementById('finaleOverlay').style.display = 'flex';
             
@@ -524,7 +580,6 @@
             var animationEnd = Date.now() + duration;
 
             (function frame() {
-                // Continuous 4 Corner fireworks blast
                 confetti({ particleCount: 8, angle: 45, spread: 60, origin: { x: 0, y: 0 } });
                 confetti({ particleCount: 8, angle: 135, spread: 60, origin: { x: 1, y: 0 } });
                 confetti({ particleCount: 8, angle: 60, spread: 60, origin: { x: 0, y: 1 } });
