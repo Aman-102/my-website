@@ -219,17 +219,30 @@
             animation: none !important;
         }
 
-        .scratch-box-container { position: relative; width: 100%; max-width: 320px; height: 180px; margin: 20px auto; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(255, 51, 102, 0.25); }
+        .scratch-box-container { position: relative; width: 100%; max-width: 320px; height: 160px; margin: 15px auto; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px rgba(255, 51, 102, 0.25); }
         .reward-content-inside { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; text-align: center; }
         .scratch-foil-cover {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #ffe082, #ffb300); display: flex; flex-direction: column; justify-content: center; align-items: center; color: #5d4037; font-weight: 800; cursor: pointer; z-index: 5;
         }
 
-        /* PROPOSAL BUTTONS STYLES */
-        .propose-btn-box { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px; position: relative; min-height: 50px; }
-        .yes-btn { background: #28a745; color: white; padding: 10px 25px; font-size: 1.1rem; font-weight: bold; border-radius: 25px; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4); transition: transform 0.3s ease; }
-        .no-btn { background: #dc3545; color: white; padding: 10px 20px; font-size: 0.95rem; font-weight: bold; border-radius: 25px; border: none; cursor: pointer; transition: transform 0.3s ease; }
+        /* PROPOSAL SECTION STYLES */
+        .proposal-card-box {
+            background: linear-gradient(135deg, #fff0f3, #ffe6eb);
+            border: 2px dashed #ff3366;
+            border-radius: 20px;
+            padding: 15px;
+            margin-top: 15px;
+            animation: fadeInProposal 0.6s ease-in-out forwards;
+        }
+        @keyframes fadeInProposal {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .propose-btn-box { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 12px; position: relative; min-height: 45px; }
+        .yes-btn { background: #28a745; color: white; padding: 10px 22px; font-size: 1rem; font-weight: bold; border-radius: 25px; border: none; cursor: pointer; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4); transition: transform 0.3s ease; }
+        .no-btn { background: #dc3545; color: white; padding: 10px 18px; font-size: 0.9rem; font-weight: bold; border-radius: 25px; border: none; cursor: pointer; transition: transform 0.3s ease; }
 
         /* DARK LUXURY FINALE POPUP OVERLAY */
         .finale-overlay {
@@ -349,23 +362,32 @@
     <div class="page" id="page6">
         <h2>The Ultimate Reward 🎁</h2>
         <p style="font-size: 0.85rem; color: #666;">Scratch the gold card below to reveal your offer!</p>
+
+        <!-- Original Scratch Box (Purana Grand Offer Text) -->
         <div class="scratch-box-container">
             <div class="reward-content-inside">
                 <p style="font-size: 1.1rem; color: #ff3366; font-weight: 800; line-height: 1.4;">
-                    Will you marry me? I love you yr! 💍❤️
+                    ✈️ 1x All-Expenses Paid Trip To Anywhere You Want! 🌍
                 </p>
-                <p style="font-size: 0.8rem; color: #555; margin-top: 5px;">Will you spend the rest of your life with me?</p>
+                <p style="font-size: 0.8rem; color: #555; margin-top: 5px;">Valid forever with Aman! ❤️</p>
             </div>
             <div class="scratch-foil-cover" id="scratchFoil" onclick="handleGrandScratch()">
-                <span style="font-size: 1.5rem;">✨ 💍 ✨</span>
+                <span style="font-size: 1.5rem;">✨ 🎁 ✨</span>
                 <span id="scratchText" style="margin-top: 5px;">Tap 7 times to scratch!</span>
             </div>
         </div>
         
-        <!-- Buttons Box -->
-        <div class="propose-btn-box" id="grandYesBtn" style="display: none; margin-top: 15px;">
-            <button class="yes-btn" id="yesBtn" onclick="triggerGrandFinale()">I Love You Too! 💖</button>
-            <button class="no-btn" id="noBtn" onclick="handleFunNo()">NO 😜</button>
+        <!-- Proposal Box (Scratch karne ke baad age display hoga) -->
+        <div class="proposal-card-box" id="proposalSection" style="display: none;">
+            <p style="font-size: 1.05rem; color: #ff3366; font-weight: 800; line-height: 1.4;">
+                Will you marry me? I love you yr! 💍❤️
+            </p>
+            <p style="font-size: 0.8rem; color: #555; margin-top: 4px;">Will you spend the rest of your life with me?</p>
+            
+            <div class="propose-btn-box">
+                <button class="yes-btn" id="yesBtn" onclick="triggerGrandFinale()">I Love You Too! 💖</button>
+                <button class="no-btn" id="noBtn" onclick="handleFunNo()">NO 😜</button>
+            </div>
         </div>
     </div>
 
@@ -526,7 +548,7 @@
                 txt.innerText = `${remaining} more tap${remaining > 1 ? 's' : ''}!`;
             } else {
                 foil.style.display = 'none';
-                document.getElementById('grandYesBtn').style.display = 'flex';
+                document.getElementById('proposalSection').style.display = 'block';
                 confetti({ particleCount: 40, spread: 70, origin: { y: 0.5 } });
             }
         }
