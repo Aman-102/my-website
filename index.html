@@ -7,15 +7,9 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;500;600&display=swap');
 
-        * { 
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
         body {
-            /* ANIMATED GRADIENT BACKGROUND */
             background: linear-gradient(-45deg, #0d1117, #1e272e, #2d3436, #111e2e);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -35,313 +29,143 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- RED BALLOON FLYING ANIMATION --- */
+        /* --- BALLOON FIXED WITH CLEAN SVG --- */
         #balloonContainer {
             position: fixed;
-            bottom: -150px;
+            bottom: -220px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 9999;
             cursor: pointer;
             display: flex;
-            flex-direction: column; /* Text ko balloon ke UPAR rakhne ke liye */
+            flex-direction: column;
             align-items: center;
-            animation: floatBalloonUp 18s ease-in-out infinite; /* Slow Speed */
+            animation: floatBalloonUp 16s ease-in-out infinite;
         }
 
         @keyframes floatBalloonUp {
-            0% {
-                bottom: -150px;
-                transform: translateX(-50%) scale(0.9);
-            }
-            50% {
-                transform: translateX(-40%) scale(1.05);
-            }
-            100% {
-                bottom: 105vh;
-                transform: translateX(-50%) scale(1);
-            }
+            0% { bottom: -220px; transform: translateX(-50%) scale(0.9); }
+            50% { transform: translateX(-40%) scale(1.05); }
+            100% { bottom: 110vh; transform: translateX(-50%) scale(1); }
         }
 
-        .balloon-pop-box {
-            background: rgba(255, 118, 117, 0.95);
+        .svg-balloon-wrapper {
+            position: relative;
+            width: 160px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .svg-balloon-wrapper svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 10px 20px rgba(238, 82, 83, 0.5));
+        }
+
+        .pop-text-inside {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             color: #ffffff;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             white-space: nowrap;
-            box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
-            margin-bottom: 8px; /* Balloon se gap */
-            animation: pulseText 1.5s infinite;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+            animation: pulseText 1.2s infinite;
         }
 
         @keyframes pulseText {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.08); }
+            100% { transform: translate(-50%, -50%) scale(1); }
         }
 
-        .red-balloon {
-            font-size: 5rem; /* Size adjustable */
-            filter: drop-shadow(0 10px 15px rgba(214, 48, 49, 0.5));
-            user-select: none;
-        }
-
-        /* FLOATING HEARTS CONTAINER */
         .hearts-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
         }
 
         .floating-heart {
-            position: absolute;
-            bottom: -20px;
+            position: absolute; bottom: -20px;
             color: rgba(255, 118, 117, 0.4);
             font-size: 1.2rem;
             animation: floatUp linear infinite;
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(0.8) rotate(0deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
             20% { opacity: 0.6; }
-            100% {
-                transform: translateY(-105vh) scale(1.3) rotate(360deg);
-                opacity: 0;
-            }
+            100% { transform: translateY(-105vh) scale(1.3) rotate(360deg); opacity: 0; }
         }
 
         .container {
-            max-width: 520px;
-            width: 100%;
+            max-width: 520px; width: 100%;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 24px;
-            padding: 30px 22px;
+            border-radius: 24px; padding: 30px 22px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            position: relative;
-            z-index: 2;
+            position: relative; z-index: 2;
         }
 
-        /* PAGE VISIBILITY & ANIMATION */
-        .page {
-            display: none;
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-
-        .page.active {
-            display: block;
-        }
+        .page { display: none; animation: fadeIn 0.4s ease-out forwards; }
+        .page.active { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .step-indicator {
-            text-align: center;
-            font-size: 0.78rem;
-            color: #d63031;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-        }
+        .step-indicator { text-align: center; font-size: 0.78rem; color: #d63031; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        h1, h2 { color: #ff7675; text-align: center; margin-bottom: 14px; font-weight: 600; font-size: 1.5rem; }
+        p { line-height: 1.7; color: #dcdde1; font-size: 0.92rem; margin-bottom: 12px; }
 
-        h1, h2 {
-            color: #ff7675;
-            text-align: center;
-            margin-bottom: 14px;
-            font-weight: 600;
-            font-size: 1.5rem;
-        }
+        .section-box { background: rgba(255, 255, 255, 0.03); border-left: 3px solid #ff7675; padding: 18px; border-radius: 0 14px 14px 0; margin: 20px 0; }
+        .media-card { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 118, 117, 0.3); border-radius: 18px; padding: 14px; margin-bottom: 20px; text-align: center; }
+        .video-wrapper { width: 100%; border-radius: 12px; overflow: hidden; background: #000; margin-bottom: 10px; }
+        .video-wrapper video { width: 100%; max-height: 280px; display: block; object-fit: cover; }
+        .media-caption { font-size: 0.85rem; color: #fab1a0; font-weight: 500; line-height: 1.5; }
 
-        p {
-            line-height: 1.7;
-            color: #dcdde1;
-            font-size: 0.92rem;
-            margin-bottom: 12px;
-        }
+        details { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); padding: 12px 15px; border-radius: 12px; margin-bottom: 12px; cursor: pointer; }
+        summary { font-weight: 500; color: #ffeaa7; font-size: 0.9rem; outline: none; }
 
-        .section-box {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid #ff7675;
-            padding: 18px;
-            border-radius: 0 14px 14px 0;
-            margin: 20px 0;
-        }
+        .btn-container { display: flex; justify-content: space-between; gap: 12px; margin-top: 25px; }
+        .btn { background: linear-gradient(135deg, #d63031, #e17055); color: #ffffff; border: none; padding: 12px 20px; border-radius: 25px; font-weight: 600; font-size: 0.9rem; cursor: pointer; flex: 1; text-align: center; box-shadow: 0 4px 15px rgba(214, 48, 49, 0.3); }
+        .btn-secondary { background: transparent; border: 1px solid rgba(255, 255, 255, 0.25); color: #b2bec3; box-shadow: none; }
 
-        /* VIDEO CARD WITH GLOW & HOVER EFFECT */
-        .media-card {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 118, 117, 0.3);
-            border-radius: 18px;
-            padding: 14px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(255, 118, 117, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .media-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 25px rgba(255, 118, 117, 0.3);
-        }
-
-        .video-wrapper {
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
-            margin-bottom: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .video-wrapper video {
-            width: 100%;
-            max-height: 280px;
-            display: block;
-            object-fit: cover;
-        }
-
-        .media-caption {
-            font-size: 0.85rem;
-            color: #fab1a0;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        /* ACCORDION CARDS */
-        details {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        details[open] {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        summary {
-            font-weight: 500;
-            color: #ffeaa7;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        /* BUTTONS */
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #d63031, #e17055);
-            color: #ffffff;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(214, 48, 49, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #b2bec3;
-            box-shadow: none;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* HANDWRITTEN AREA */
-        .handwritten-area {
-            width: 100%;
-            height: 130px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ff7675;
-            padding: 12px;
-            border-radius: 12px;
-            resize: none;
-            line-height: 1.7;
-            font-family: 'Caveat', cursive;
-            font-size: 1.25rem;
-            letter-spacing: 0.5px;
-        }
-
-        /* COMMENT BOX AREA */
-        .comment-section {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 16px;
-            border-radius: 16px;
-            margin-top: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .comment-input {
-            width: 100%;
-            height: 95px;
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            resize: none;
-            margin-bottom: 12px;
-            outline: none;
-        }
-
-        .comment-input:focus {
-            border-color: #ff7675;
-        }
-
-        /* HIDDEN AUDIO PLAYER */
-        #bgMusic {
-            display: none;
-        }
+        .handwritten-area { width: 100%; height: 160px; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.15); color: #ff7675; padding: 12px; border-radius: 12px; resize: none; line-height: 1.7; font-family: 'Caveat', cursive; font-size: 1.25rem; }
+        .comment-section { background: rgba(255, 255, 255, 0.04); padding: 16px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(255, 255, 255, 0.08); }
+        .comment-input { width: 100%; height: 95px; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; padding: 12px; border-radius: 10px; font-size: 0.88rem; resize: none; margin-bottom: 12px; outline: none; }
     </style>
-</head>
-<body>
+</head><body>
 
-    <!-- FLYING RED BALLOON WITH TEXT ON TOP -->
+    <!-- BALLOON WITH TEXT PERFECTLY INSIDE -->
     <div id="balloonContainer" onclick="popBalloonAndPlay()">
-        <div class="balloon-pop-box">POP ME!!❤️</div>
-        <div class="red-balloon">🎈</div>
+        <div class="svg-balloon-wrapper">
+            <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+                <!-- Balloon Body -->
+                <path d="M50,10 C25,10 10,32 10,58 C10,85 42,105 47,110 L45,115 L55,115 L53,110 C58,105 90,85 90,58 C90,32 75,10 50,10 Z" fill="#ff4d4d"/>
+                <!-- Balloon Highlight -->
+                <ellipse cx="32" cy="30" rx="6" ry="12" fill="#ffffff" opacity="0.35" transform="rotate(-30 32 30)"/>
+                <!-- String -->
+                <path d="M50,115 Q45,122 52,128 T48,135" stroke="#48dbfb" stroke-width="2" fill="none"/>
+            </svg>
+            <div class="pop-text-inside">POP ME!! 💖</div>
+        </div>
     </div>
 
     <!-- FLOATING HEARTS EFFECT -->
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <!-- HIDDEN AUDIO TAG -->
- <audio id="bgMusic" loop preload="auto">
-    <source src="bgmusic.mp3" type="audio/mpeg">
-
+    <!-- AUDIO: ISHQ SUFIYANA -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdnsongs.com/music/data/Single_Track/201111/Ishq_Sufiyana/128/Ishq_Sufiyana_1.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
@@ -362,17 +186,15 @@
             </div>
         </div>
 
-        <!-- PAGE 2: MUTED VIDEO SORRY & PROMISES -->
+        <!-- PAGE 2: VIDEO & PROMISES -->
         <div class="page" id="page2">
             <div class="step-indicator">Step 2 of 3 • Straight From My Heart</div>
             <h2>A Video Message For You 🎥</h2>
 
-            <!-- MUTED VIDEO CARD WITH EFFECT -->
             <div class="media-card">
                 <div class="video-wrapper">
                     <video controls muted playsinline poster="poster.jpg">
-                        <source src="https://files.catbox.moe/nkfwss.mp3" type="video/mp4">
-                        Your browser does not support the video tag.
+                        <source src="myvideo.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="media-caption">
@@ -380,7 +202,6 @@
                 </div>
             </div>
 
-            <!-- INTERACTIVE CARDS -->
             <p style="font-size: 0.85rem; color: #ffeaa7; margin-bottom: 8px;">Tap to read my promises:</p>
             
             <details>
@@ -399,168 +220,21 @@
             </div>
         </div>
 
-        <!-- PAGE 3: HANDWRITTEN SORRY & COMMENT BOX -->
+        <!-- PAGE 3: 143 TIMES REPEATED I AM SO SORRY -->
         <div class="page" id="page3">
             <div class="step-indicator">Step 3 of 3 • From My Own Hands</div>
             <h2>I'm Writing This Myself... ✍️</h2>
             <p style="font-size: 0.85rem; color: #a4b0be; text-align: center;">Maine ye kisi code se copy nahi kiya, ye har line maine khud type karke likhi hai:</p>
 
-            <!-- HANDWRITTEN STYLE TEXTAREA -->
             <div style="margin: 15px 0;">
-                <textarea class="handwritten-area" readonly>
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.
-I am so sorry.                   
-I am so sorry.143
-Please forgive me, my heart. ❤️</textarea>
+                <textarea class="handwritten-area" id="sorryBox" readonly></textarea>
             </div>
 
-            <!-- OPEN COMMENT BOX SECTION -->
             <div class="comment-section">
                 <h4 style="color: #ffeaa7; margin-bottom: 6px; font-size: 0.95rem;">Aapko mere se jo bolna hai, bolo openly 💬</h4>
                 <p style="font-size: 0.8rem; color: #a4b0be; margin-bottom: 10px;">Chahe aapko mujhpar gussa nikalna ho, galti batani ho, ya jo bhi kehna ho—bina kisi hesitation ke likh do. Ye message seedhe sirf mere paas aayega:</p>
 
-                <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" id="commentForm">
+                <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
                     <textarea name="gf_message" class="comment-input" placeholder="Likh do jo bhi aapke dil me hai..." required></textarea>
                     <button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #00b894, #00cec9); border: none;">Send Your Thoughts 📩</button>
                 </form>
@@ -573,65 +247,58 @@ Please forgive me, my heart. ❤️</textarea>
 
     </div>
 
-    <!-- SCRIPT SECTION -->
+    <!-- SCRIPT -->
     <script>
-        // PAGE NAVIGATION
+        // GENERATE 143 TIMES "I AM SO SORRY."
+        const sorryBox = document.getElementById('sorryBox');
+        let text = '';
+        for (let i = 1; i <= 143; i++) {
+            text += `${i}. I am so sorry. ❤️\n`;
+        }
+        sorryBox.value = text;
+
         function nextPage(pageNumber) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById('page' + pageNumber).classList.add('active');
         }
 
-        // BALLOON CLICK HANDLER (FORCED DIRECT AUDIO TRIGGER)
         function popBalloonAndPlay() {
             const music = document.getElementById('bgMusic');
             
             if (music) {
-                music.currentTime = 0; // Song shuru se start hoga
-                music.muted = false;     // Mute remove hoga
-                music.volume = 1.0;      // Full sound
+                music.currentTime = 0;
+                music.muted = false;
+                music.volume = 1.0;
                 
-                // Direct user click handler inside promise
-                const promise = music.play();
-                if (promise !== undefined) {
-                    promise.then(function() {
-                        console.log("Song playing perfectly!");
-                    }).catch(function(err) {
-                        console.log("Audio Play Failed: ", err);
-                    });
-                }
+                music.play().then(() => {
+                    console.log("Ishq Sufiyana is playing successfully!");
+                }).catch(err => {
+                    console.log("Audio play error: ", err);
+                });
             }
 
-            // Balloon Screen se hat jayega
             const balloon = document.getElementById('balloonContainer');
             if (balloon) {
                 balloon.style.display = 'none';
             }
         }
 
-        // FLOATING HEARTS GENERATOR
+        // FLOATING HEARTS
         function createHeart() {
             const container = document.getElementById('heartsContainer');
             if (!container) return;
 
             const heart = document.createElement('div');
             heart.classList.add('floating-heart');
-            
             const icons = ['❤️', '✨', '💖', '🌸'];
             heart.innerText = icons[Math.floor(Math.random() * icons.length)];
-            
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
             heart.style.fontSize = (Math.random() * 10 + 12) + 'px';
             
             container.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
+            setTimeout(() => heart.remove(), 6000);
         }
-
         setInterval(createHeart, 600);
     </script>  
 </body>
