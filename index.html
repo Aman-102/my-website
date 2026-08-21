@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;500;600&display=swap');
 
         * { 
-             margin: 0;
+            margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
@@ -33,6 +33,59 @@
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* --- RED BALLOON FLYING ANIMATION & POP-UP --- */
+        #balloonContainer {
+            position: fixed;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: floatBalloonUp 15s ease-in-out infinite;
+        }
+
+        @keyframes floatBalloonUp {
+            0% {
+                bottom: -150px;
+                transform: translateX(-50%) scale(0.9);
+            }
+            50% {
+                transform: translateX(-40%) scale(1.05);
+            }
+            100% {
+                bottom: 105vh;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        .balloon-pop-box {
+            background: rgba(255, 118, 117, 0.95);
+            color: #ffffff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
+            margin-bottom: 6px;
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .red-balloon {
+            font-size: 6rem;
+            filter: drop-shadow(0 10px 15px rgba(214, 48, 49, 0.5));
+            user-select: none;
         }
 
         /* FLOATING HEARTS CONTAINER */
@@ -267,21 +320,29 @@
         .comment-input:focus {
             border-color: #ff7675;
         }
+
+        /* HIDDEN AUDIO PLAYER STYLE */
+        #bgMusic {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
+    <!-- FLYING RED BALLOON WITH POP-UP TEXT -->
+    <div id="balloonContainer" onclick="popBalloonAndPlay()">
+        <div class="balloon-pop-box">POP ME!!❤️</div>
+        <div class="red-balloon">🎈</div>
+    </div>
+
     <!-- FLOATING HEARTS EFFECT -->
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <!-- VISIBLE AUDIO PLAYER FOR GUARANTEED PLAY -->
-<div style="text-align: center; margin: 15px 0;">
-    <p style="font-size: 0.8rem; color: #ffeaa7; margin-bottom: 5px;">🎵 Tap play button to start music:</p>
-    <audio id="bgMusic" controls loop preload="auto" style="width: 100%; max-width: 300px;">
+    <!-- HIDDEN AUDIO PLAYER -->
+    <audio id="bgMusic" loop preload="auto">
         <source src="bgmusic.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-</div>
 
     <div class="container">
 
@@ -512,6 +573,7 @@ Please forgive me, my heart. ❤️</textarea>
         </div>
 
     </div>
+
     <script>
         function nextPage(pageNumber) {
             document.querySelectorAll('.page').forEach(page => {
@@ -520,27 +582,33 @@ Please forgive me, my heart. ❤️</textarea>
             document.getElementById('page' + pageNumber).classList.add('active');
         }
 
-        // BACKGROUND MUSIC HANDLER WITH FULL COMPATIBILITY
-        let musicStarted = false;
-        function playBgMusic() {
-            if (!musicStarted) {
-                const music = document.getElementById('bgMusic');
-                music.volume = 0.4;
-                let playPromise = music.play();
-
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        musicStarted = true;
-                    }).catch(err => {
-                        console.log("Waiting for interaction...", err);
-                    });
-                }
+        // BALLOON CLICK HANDLER (PLAYS MUSIC & REMOVES BALLOON)
+        function popBalloonAndPlay() {
+            const music = document.getElementById('bgMusic');
+            if (music) {
+                music.volume = 0.5;
+                music.play().then(() => {
+                    console.log("Music started via Balloon pop!");
+                }).catch(err => {
+                    console.log("Audio Error: ", err);
+                });
+            }
+            
+            // Hide balloon after click
+            const balloon = document.getElementById('balloonContainer');
+            if (balloon) {
+                balloon.style.display = 'none';
             }
         }
 
-        // PLAY MUSIC ON ANY INTERACTION
-        ['click', 'touchstart', 'scroll'].forEach(evt => {
-            document.addEventListener(evt, playBgMusic, { once: true });
+        // FALLBACK: ANY TOUCH ON SCREEN PLAYS MUSIC
+        ['click', 'touchstart'].forEach(evt => {
+            document.addEventListener(evt, () => {
+                const music = document.getElementById('bgMusic');
+                if (music && music.paused) {
+                    music.play();
+                }
+            }, { once: true });
         });
 
         // GENERATE FLOATING HEARTS
@@ -566,24 +634,6 @@ Please forgive me, my heart. ❤️</textarea>
         }
 
         setInterval(createHeart, 600);
-    
-
-// Screen par tap karte hi music forced play hoga
-function playAudio() {
-    const music = document.getElementById('bgMusic');
-    if (music) {
-        music.play().then(() => {
-            console.log("Audio playing successfully!");
-        }).catch(err => {
-            console.log("Autoplay error: ", err);
-        });
-    }
-}
-
-// User ke kisi bhi gesture/click par audio start kar dega
-['click', 'touchstart', 'scroll'].forEach(event => {
-    document.addEventListener(event, playAudio, { once: true });
-});
-       </script>  
+    </script>  
 </body>
 </html>
