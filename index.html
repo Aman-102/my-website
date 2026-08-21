@@ -509,7 +509,6 @@ Please forgive me, my heart. ❤️</textarea>
         </div>
 
     </div>
-
     <script>
         function nextPage(pageNumber) {
             document.querySelectorAll('.page').forEach(page => {
@@ -564,6 +563,24 @@ Please forgive me, my heart. ❤️</textarea>
         }
 
         setInterval(createHeart, 600);
-    </script>
+    
+
+// Screen par tap karte hi music forced play hoga
+function playAudio() {
+    const music = document.getElementById('bgMusic');
+    if (music) {
+        music.play().then(() => {
+            console.log("Audio playing successfully!");
+        }).catch(err => {
+            console.log("Autoplay error: ", err);
+        });
+    }
+}
+
+// User ke kisi bhi gesture/click par audio start kar dega
+['click', 'touchstart', 'scroll'].forEach(event => {
+    document.addEventListener(event, playAudio, { once: true });
+});
+       </script>  
 </body>
 </html>
