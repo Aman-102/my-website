@@ -269,16 +269,17 @@
         }
     </style>
 </head>
-<body onclick="forcePlayMusic()">
-  <!-- FLOATING HEARTS EFFECT -->
-  <div class="hearts-container" id="heartsContainer"></div>
+<body onclick="playBgMusic()">
 
-  <!-- BACKGROUND AUDIO PLAYER -->
-  <audio id="bgMusic" loop preload="auto">
-      <source src="./bg-music.mp3" type="audio/mpeg">
-  </audio>
+    <!-- FLOATING HEARTS EFFECT -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- BACKGROUND AUDIO PLAYER -->
+    <audio id="bgMusic" loop>
+        <source src="bg-music.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="container">
-
         <!-- PAGE 1: HEARTFELT LETTER -->
         <div class="page active" id="page1">
             <div class="step-indicator">Step 1 of 3 • My Realization</div>
