@@ -35,7 +35,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- RED BALLOON FLYING ANIMATION & POP-UP --- */
+        /* --- RED BALLOON FLYING ANIMATION --- */
         #balloonContainer {
             position: fixed;
             bottom: -150px;
@@ -44,9 +44,9 @@
             z-index: 9999;
             cursor: pointer;
             display: flex;
-            flex-direction: column;
+            flex-direction: column; /* Text ko balloon ke UPAR rakhne ke liye */
             align-items: center;
-            animation: floatBalloonUp 15s ease-in-out infinite;
+            animation: floatBalloonUp 18s ease-in-out infinite; /* Slow Speed */
         }
 
         @keyframes floatBalloonUp {
@@ -66,13 +66,13 @@
         .balloon-pop-box {
             background: rgba(255, 118, 117, 0.95);
             color: #ffffff;
-            padding: 8px 15px;
+            padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
             white-space: nowrap;
             box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
-            margin-bottom: 6px;
+            margin-bottom: 8px; /* Balloon se gap */
             animation: pulseText 1.5s infinite;
         }
 
@@ -83,7 +83,7 @@
         }
 
         .red-balloon {
-            font-size: 6rem;
+            font-size: 5rem; /* Size adjustable */
             filter: drop-shadow(0 10px 15px rgba(214, 48, 49, 0.5));
             user-select: none;
         }
@@ -321,7 +321,7 @@
             border-color: #ff7675;
         }
 
-        /* HIDDEN AUDIO PLAYER STYLE */
+        /* HIDDEN AUDIO PLAYER */
         #bgMusic {
             display: none;
         }
@@ -329,7 +329,7 @@
 </head>
 <body>
 
-    <!-- FLYING RED BALLOON WITH POP-UP TEXT -->
+    <!-- FLYING RED BALLOON WITH TEXT ON TOP -->
     <div id="balloonContainer" onclick="popBalloonAndPlay()">
         <div class="balloon-pop-box">POP ME!!❤️</div>
         <div class="red-balloon">🎈</div>
@@ -338,9 +338,9 @@
     <!-- FLOATING HEARTS EFFECT -->
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <!-- HIDDEN AUDIO PLAYER -->
+    <!-- HIDDEN AUDIO TAG -->
     <audio id="bgMusic" loop preload="auto">
-        <source src="bgmusic.mp3" type="audio/mp3">
+        <source src="bgmusic.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
@@ -559,8 +559,7 @@ Please forgive me, my heart. ❤️</textarea>
             <div class="comment-section">
                 <h4 style="color: #ffeaa7; margin-bottom: 6px; font-size: 0.95rem;">Aapko mere se jo bolna hai, bolo openly 💬</h4>
                 <p style="font-size: 0.8rem; color: #a4b0be; margin-bottom: 10px;">Chahe aapko mujhpar gussa nikalna ho, galti batani ho, ya jo bhi kehna ho—bina kisi hesitation ke likh do. Ye message seedhe sirf mere paas aayega:</p>
-                
-                <!-- REPLACE 'YOUR_FORMSPREE_ID' WITH YOUR ACTUAL FORMSPREE LINK -->
+
                 <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" id="commentForm">
                     <textarea name="gf_message" class="comment-input" placeholder="Likh do jo bhi aapke dil me hai..." required></textarea>
                     <button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #00b894, #00cec9); border: none;">Send Your Thoughts 📩</button>
@@ -574,7 +573,9 @@ Please forgive me, my heart. ❤️</textarea>
 
     </div>
 
+    <!-- SCRIPT SECTION -->
     <script>
+        // PAGE NAVIGATION
         function nextPage(pageNumber) {
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
@@ -582,36 +583,34 @@ Please forgive me, my heart. ❤️</textarea>
             document.getElementById('page' + pageNumber).classList.add('active');
         }
 
-        // BALLOON CLICK HANDLER (PLAYS MUSIC & REMOVES BALLOON)
+        // BALLOON CLICK HANDLER (FORCED DIRECT AUDIO TRIGGER)
         function popBalloonAndPlay() {
             const music = document.getElementById('bgMusic');
-            if (music) {
-                music.volume = 0.5;
-                music.play().then(() => {
-                    console.log("Music started via Balloon pop!");
-                }).catch(err => {
-                    console.log("Audio Error: ", err);
-                });
-            }
             
-            // Hide balloon after click
+            if (music) {
+                music.currentTime = 0; // Song shuru se start hoga
+                music.muted = false;     // Mute remove hoga
+                music.volume = 1.0;      // Full sound
+                
+                // Direct user click handler inside promise
+                const promise = music.play();
+                if (promise !== undefined) {
+                    promise.then(function() {
+                        console.log("Song playing perfectly!");
+                    }).catch(function(err) {
+                        console.log("Audio Play Failed: ", err);
+                    });
+                }
+            }
+
+            // Balloon Screen se hat jayega
             const balloon = document.getElementById('balloonContainer');
             if (balloon) {
                 balloon.style.display = 'none';
             }
         }
 
-        // FALLBACK: ANY TOUCH ON SCREEN PLAYS MUSIC
-        ['click', 'touchstart'].forEach(evt => {
-            document.addEventListener(evt, () => {
-                const music = document.getElementById('bgMusic');
-                if (music && music.paused) {
-                    music.play();
-                }
-            }, { once: true });
-        });
-
-        // GENERATE FLOATING HEARTS
+        // FLOATING HEARTS GENERATOR
         function createHeart() {
             const container = document.getElementById('heartsContainer');
             if (!container) return;
