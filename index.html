@@ -486,50 +486,66 @@ Please forgive me, my heart. ❤️</textarea>
         </div>
 
     </div>
-    <script>
-  let musicStarted = false;
+   <script>
+    function nextPage(pageNumber) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById('page' + pageNumber).classList.add('active');
+    }
 
-  // 1. Next Page Switch Function (Fixed)
-  function nextPage(pageNumber) {
-      // Sabhi pages ko hide karein
-      document.querySelectorAll('.page').forEach(page => {
-          page.classList.remove('active');
-          page.style.display = 'none';
-      });
+    // ROBUST AUTOPLAY + CLICK MUSIC HANDLER
+    let musicStarted = false;
 
-      // Target page ko show karein
-      const targetPage = document.getElementById('page' + pageNumber);
-      if (targetPage) {
-          targetPage.classList.add('active');
-          targetPage.style.display = 'block';
-      }
+    function forcePlayMusic() {
+        if (!musicStarted) {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.4;
+            let playPromise = music.play();
 
-      // Button click par music play karein
-      forcePlayMusic();
-  }
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicStarted = true;
+                    console.log("Music playing successfully!");
+                }).catch(err => {
+                    console.log("Autoplay blocked, waiting for user click...", err);
+                });
+            }
+        }
+    }
 
-  // 2. Music Play Function
-  function forcePlayMusic() {
-      if (!musicStarted) {
-          const music = document.getElementById('bgMusic');
-          if (music) {
-              music.volume = 0.5;
-              music.play().then(() => {
-                  musicStarted = true;
-                  console.log("Music playing successfully!");
-              }).catch(err => {
-                  console.log("Autoplay blocked, waiting for click...", err);
-              });
-          }
-      }
-  }
+    // Try playing immediately on load
+    window.addEventListener('load', forcePlayMusic);
 
-  // 3. User interaction event listener
-  ['click', 'touchstart', 'keydown'].forEach(eventType => {
-      document.addEventListener(eventType, forcePlayMusic, { once: true });
-  });
+    // Try playing on ANY user interaction (click, touch, scroll)
+    ['click', 'touchstart', 'keydown'].forEach(eventType => {
+        document.addEventListener(eventType, forcePlayMusic, { once: true });
+    });
+
+    // GENERATE FLOATING HEARTS
+    function createHeart() {
+        const container = document.getElementById('heartsContainer');
+        if (!container) return;
+        
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        
+        const icons = ['❤️', '✨', '💖', '🌸'];
+        heart.innerText = icons[Math.floor(Math.random() * icons.length)];
+        
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        heart.style.fontSize = (Math.random() * 10 + 12) + 'px';
+        
+        container.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+
+    setInterval(createHeart, 600);
 </script>
-   
  
 </body>
 </html>
