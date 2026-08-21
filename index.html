@@ -275,7 +275,7 @@
     <div class="hearts-container" id="heartsContainer"></div>
 
     <!-- BACKGROUND AUDIO PLAYER -->
-    <audio id="bg-Music" loop autoplay controls style="display:none;">
+    <audio id="bgMusic" loop preload="auto">
         <source src="bg-music.mpeg" type="audio/mpeg">
     </audio>
 
@@ -489,47 +489,65 @@ Please forgive me, my heart. ❤️</textarea>
 
     </div>
 
-    <script>
-        function nextPage(pageNumber) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById('page' + pageNumber).classList.add('active');
-        }
+  <script>
+    function nextPage(pageNumber) {
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        document.getElementById('page' + pageNumber).classList.add('active');
+    }
 
-        // BACKGROUND MUSIC AUTOPLAY HANDLER
-        let musicStarted = false;
-        function playBgMusic() {
-            if (!musicStarted) {
-                const music = document.getElementById('bgMusic');
-                music.volume = 0.3;
-                music.play().then(() => {
+    // ROBUST AUTOPLAY + CLICK MUSIC HANDLER
+    let musicStarted = false;
+
+    function forcePlayMusic() {
+        if (!musicStarted) {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.4;
+            let playPromise = music.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
                     musicStarted = true;
-                }).catch(e => console.log("Autoplay blocked"));
+                    console.log("Music playing successfully!");
+                }).catch(err => {
+                    console.log("Autoplay blocked, waiting for user click...", err);
+                });
             }
         }
+    }
 
-        // GENERATE FLOATING HEARTS
-        function createHeart() {
-            const container = document.getElementById('heartsContainer');
-            const heart = document.createElement('div');
-            heart.classList.add('floating-heart');
-            
-            const icons = ['❤️', '✨', '💖', '🌸'];
-            heart.innerText = icons[Math.floor(Math.random() * icons.length)];
-            
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-            heart.style.fontSize = (Math.random() * 10 + 12) + 'px';
-            
-            container.appendChild(heart);
+    // Try playing immediately on load
+    window.addEventListener('load', forcePlayMusic);
 
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }
+    // Try playing on ANY user interaction (click, touch, scroll)
+    ['click', 'touchstart', 'keydown'].forEach(eventType => {
+        document.addEventListener(eventType, forcePlayMusic, { once: true });
+    });
 
-        setInterval(createHeart, 600);
-    </script>
+    // GENERATE FLOATING HEARTS
+    function createHeart() {
+        const container = document.getElementById('heartsContainer');
+        if (!container) return;
+        
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        
+        const icons = ['❤️', '✨', '💖', '🌸'];
+        heart.innerText = icons[Math.floor(Math.random() * icons.length)];
+        
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        heart.style.fontSize = (Math.random() * 10 + 12) + 'px';
+        
+        container.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+    }
+
+    setInterval(createHeart, 600);
+</script>
 </body>
 </html>
