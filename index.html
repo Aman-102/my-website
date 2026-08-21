@@ -489,33 +489,42 @@ Please forgive me, my heart. ❤️</textarea>
     <script>
   let musicStarted = false;
 
-  // Page switch karne ke liye (Jo code me missing tha)
+  // 1. Next Page Switch Function (Fixed)
   function nextPage(pageNumber) {
+      // Sabhi pages ko hide karein
       document.querySelectorAll('.page').forEach(page => {
           page.classList.remove('active');
+          page.style.display = 'none';
       });
+
+      // Target page ko show karein
       const targetPage = document.getElementById('page' + pageNumber);
       if (targetPage) {
           targetPage.classList.add('active');
+          targetPage.style.display = 'block';
       }
+
+      // Button click par music play karein
       forcePlayMusic();
   }
 
-  // Background Music Play Function
+  // 2. Music Play Function
   function forcePlayMusic() {
       if (!musicStarted) {
           const music = document.getElementById('bgMusic');
-          music.volume = 0.5;
-          music.play().then(() => {
-              musicStarted = true;
-              console.log("Music playing successfully!");
-          }).catch(err => {
-              console.log("Autoplay blocked, waiting for click...", err);
-          });
+          if (music) {
+              music.volume = 0.5;
+              music.play().then(() => {
+                  musicStarted = true;
+                  console.log("Music playing successfully!");
+              }).catch(err => {
+                  console.log("Autoplay blocked, waiting for click...", err);
+              });
+          }
       }
   }
 
-  // Page par kahin bhi tap/click karne par song start hoga
+  // 3. User interaction event listener
   ['click', 'touchstart', 'keydown'].forEach(eventType => {
       document.addEventListener(eventType, forcePlayMusic, { once: true });
   });
